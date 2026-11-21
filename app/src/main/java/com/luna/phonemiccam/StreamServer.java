@@ -1,4 +1,4 @@
-package com.luma.phonecam;
+package com.luna.phonemiccam;
 
 import android.content.Context;
 import java.io.*;
@@ -25,7 +25,7 @@ final class StreamServer {
         final LinkedBlockingDeque<byte[]> queue = new LinkedBlockingDeque<>(6);
         volatile boolean open = true;
         AudioPeer(Socket socket) throws IOException { this.socket = socket; this.out = new DataOutputStream(socket.getOutputStream()); }
-        void start() { new Thread(() -> { try { while (running && open) { byte[] pcm = queue.takeFirst(); out.write(0x82); int n=pcm.length; if(n<126)out.write(n);else{out.write(126);out.write((n>>>8)&255);out.write(n&255);} out.write(pcm); out.flush(); } } catch(Exception ignored) { } finally { close(); } }, "luma-ws-audio").start(); }
+        void start() { new Thread(() -> { try { while (running && open) { byte[] pcm = queue.takeFirst(); out.write(0x82); int n=pcm.length; if(n<126)out.write(n);else{out.write(126);out.write((n>>>8)&255);out.write(n&255);} out.write(pcm); out.flush(); } } catch(Exception ignored) { } finally { close(); } }, "luna-ws-audio").start(); }
         void offer(byte[] pcm) { if (!queue.offerLast(pcm)) { queue.pollFirst(); queue.offerLast(pcm); } }
         void close() { if (!open) return; open=false; audioClients.remove(this); try { socket.close(); } catch(IOException ignored) {} }
     }
@@ -45,10 +45,10 @@ final class StreamServer {
                     socket.setTcpNoDelay(true);
                     socket.setSendBufferSize(4096);
                     socket.setSoTimeout(8000);
-                    new Thread(() -> handle(socket), "luma-client").start();
+                    new Thread(() -> handle(socket), "luna-client").start();
                 } catch (IOException e) { if (running) e.printStackTrace(); }
             }
-        }, "luma-http");
+        }, "luna-http");
         accept.start();
     }
 
@@ -146,3 +146,5 @@ final class StreamServer {
         cameraActive = false; latestJpeg = null;
     }
 }
+
+
