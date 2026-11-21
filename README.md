@@ -1,31 +1,100 @@
 # Luna Phone MicCam
 
-Luna Phone MicCam turns an Android phone into a low-latency microphone and camera source for OBS over local Wi-Fi. Audio is sent as short PCM WebSocket packets rather than a buffered media file. No ads, accounts, or cloud service.
+<p align="center">
+  <img src="docs/images/luna-mark.svg" alt="Luna Phone MicCam" width="112" />
+</p>
+
+<h3 align="center">Your phone, on your OBS scene.</h3>
+<p align="center">Turn an Android phone into a local Wi-Fi microphone and camera source for OBS Studio.</p>
+
+<p align="center">
+  <img alt="Android" src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white" />
+  <img alt="OBS Studio" src="https://img.shields.io/badge/Works%20with-OBS%20Studio-302E31?logo=obsstudio&logoColor=white" />
+  <img alt="Connection" src="https://img.shields.io/badge/Connection-Local%20Wi--Fi-20DDF0" />
+  <img alt="Ads" src="https://img.shields.io/badge/Ads-None-17C98B" />
+</p>
+
+---
+
+## App previews
+
+These static previews are drawn from the current Android and OBS page source. They illustrate the real interface and idle states; they are not captures from a connected Android device.
+
+<p align="center">
+  <img src="docs/images/phone-home.svg" alt="Luna Phone MicCam Android home screen preview" width="31%" />
+  &nbsp;
+  <img src="docs/images/obs-audio.svg" alt="OBS browser audio source preview" width="31%" />
+  &nbsp;
+  <img src="docs/images/obs-camera.svg" alt="OBS browser camera source preview" width="31%" />
+</p>
+
+## What it does
+
+- **Live microphone:** streams mono 48 kHz PCM in short 10 ms packets to an OBS Browser Source over a direct WebSocket.
+- **Phone camera:** sends a live MJPEG feed over your local network; choose the front or rear camera.
+- **OBS-ready sizing:** enter a custom width and height, or choose 1280 × 720 / 1920 × 1080. The source URL carries those dimensions.
+- **Mic gain:** adjust input gain from the phone while streaming.
+- **Private by design:** the phone serves the feeds on your local network. No account, cloud relay, ads, or analytics are included.
+
+> Keep Luna Phone MicCam open and the phone and computer on the same Wi-Fi network while streaming. Internet access is not used to relay audio or video.
 
 ## Install
 
-Install `LunaPhoneMicCam.apk` on Android 8.0 (API 26) or later. This is a debug-signed APK for direct installation. Android treats this renamed package as a separate app; the earlier install can be removed after switching. 
+Download [`LunaPhoneMicCam.apk`](LunaPhoneMicCam.apk), transfer it to your Android phone, and open it to install. The app supports Android 8.0 (API 26) and newer. Because this is a locally built APK, Android may ask you to allow installs from the app you opened it with.
 
-## Audio in OBS
+The APK is debug-signed. Android identifies this renamed app separately from the earlier Luma/Phone-as-Mic package.
 
-1. Connect the phone and PC to the same Wi-Fi network.
-2. Open Luna Phone MicCam and tap **Start Mic**. Allow microphone access.
-3. Tap **Copy Audio Source**.
-4. In OBS, add a **Browser Source**, paste the copied URL, and set Width and Height to the pixel values shown in the app.
-5. Enable **Control audio via OBS** in the Browser Source properties. Keep the source visible and unmuted.
+## Connect it to OBS
 
-If OBS reports a browser audio gesture is needed, right-click the Browser Source, choose **Interact**, and tap **Start Audio** in the page. The app shows **OBS Connected** when the browser source opens its audio link.
+1. Put your phone and computer on the **same Wi-Fi network**. Avoid guest Wi-Fi or access-point isolation, which can block devices from reaching each other.
+2. Open Luna Phone MicCam and tap **Start Mic**. Allow microphone access. The app starts a small web server and shows its local address.
+3. Choose the desired OBS **width** and **height** in the app.
+4. Tap **Copy Audio Source**. In OBS, add **Sources → + → Browser**, paste the copied URL, and use the same width and height values shown in Luna.
+5. In the Browser Source properties, enable **Control audio via OBS**. Keep the source visible and unmuted.
+6. If OBS asks for a browser audio gesture, right-click the source, choose **Interact**, then click **Start Audio**.
 
-## Camera in OBS
+The app changes its status to **OBS Connected** when OBS opens the audio WebSocket. For a camera source, tap **Enable Camera**, select **Front Camera** or **Back Camera**, and add the URL copied with **Copy Camera Source** as a second Browser Source.
 
-Tap **Enable Camera**, choose the front or back camera, then tap **Copy Camera Source**. Add it as another Browser Source with the same Width and Height values. Video is delivered as a live MJPEG stream; the source can wait while the phone camera is off and begin showing frames when enabled.
+### Suggested source sizes
 
-## Latency and format
+| Use | Width | Height |
+| --- | ---: | ---: |
+| Standard landscape | 1280 | 720 |
+| Full HD landscape | 1920 | 1080 |
 
-Microphone capture is mono 48 kHz PCM in 10 ms blocks. Audio reaches OBS over a direct WebSocket with a short bounded queue to prevent network hiccups from building a playback backlog. Camera output is JPEG over local MJPEG HTTP. Both streams stay on the phone and local network.
+You can also enter custom dimensions in the app. Set the OBS Browser Source to those exact pixel values.
+
+## Latency notes
+
+Audio is captured as 48 kHz mono PCM and sent in short blocks; the browser schedules playback with a small bounded queue instead of waiting for a large audio file to buffer. Actual latency depends on the phone, Wi-Fi quality, and OBS/browser audio settings. For the best response, keep both devices on a strong 5 GHz network when available and close to the access point.
+
+## Troubleshooting
+
+- **OBS cannot open the URL:** confirm both devices are on the same Wi-Fi, the mic is running, and the phone screen/app has not been closed. Guest networks may prevent local connections.
+- **No audio:** turn on **Control audio via OBS**, check that the source is unmuted in the OBS mixer, and use **Interact → Start Audio** if prompted.
+- **Camera is blank:** start the mic stream first, then enable the camera and grant camera permission. Try switching front/back camera.
+- **Source is cropped or soft:** match OBS Browser Source width and height to the values in the app; try 1920 × 1080 if the phone/network can keep up.
+- **Audio is delayed or choppy:** use a stronger Wi-Fi signal, reduce competing network traffic, and try 1280 × 720 for video.
 
 ## Build from source
 
-Install JDK 17 and Android SDK Platform 35, then run `gradlew.bat assembleDebug`. The APK is written to `app/build/outputs/apk/debug/app-debug.apk`.
+Requirements: JDK 17 and Android SDK Platform 35.
 
+```powershell
+./gradlew.bat assembleDebug
+```
 
+The debug APK is created at `app/build/outputs/apk/debug/app-debug.apk`.
+
+## Project layout
+
+```text
+app/src/main/java/com/luna/phonemiccam/  Android app and local streaming server
+app/src/main/assets/obs.html             OBS Browser Source page
+docs/images/                             README UI preview artwork
+LunaPhoneMicCam.apk                      Installable debug APK
+```
+
+## License
+
+No license has been declared yet. Contact the repository owner before redistributing or reusing this project.

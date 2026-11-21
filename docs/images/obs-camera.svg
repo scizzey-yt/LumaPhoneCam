@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+  <title id="title">Luna Phone MicCam OBS camera source preview</title><desc id="desc">Preview of the camera browser source waiting for a live phone camera.</desc>
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0a0e1a"/><stop offset="1" stop-color="#07090e"/></linearGradient><radialGradient id="ring"><stop stop-color="#142941" stop-opacity="0"/><stop offset=".8" stop-color="#1b6780" stop-opacity=".25"/><stop offset="1" stop-color="#1b6780" stop-opacity="0"/></radialGradient></defs>
+  <rect width="900" height="520" rx="26" fill="url(#bg)"/><rect x="1" y="1" width="898" height="518" rx="25" fill="url(#ring)"/>
+  <rect x="26" y="24" width="190" height="42" rx="21" fill="#0b1022" stroke="#34415d"/><circle cx="48" cy="45" r="5" fill="#59627c"/><text x="63" y="50" fill="#acbad2" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">WAITING FOR CAMERA</text>
+  <g transform="translate(450 240)" fill="none" stroke="#30405c"><rect x="-57" y="-40" width="114" height="80" rx="17" stroke-width="5"/><circle cx="0" cy="0" r="25" stroke-width="5"/><circle cx="39" cy="-23" r="5" fill="#30405c" stroke="none"/><path d="M-82-58h28M-82-58v26M82-58H54M82-58v26M-82 58h28M-82 58V32M82 58H54M82 58V32" stroke-width="4" stroke-linecap="round" opacity=".55"/></g>
+  <text x="450" y="354" text-anchor="middle" fill="#53617c" font-family="Arial,sans-serif" font-size="13" letter-spacing="3">ENABLE THE PHONE CAMERA TO BEGIN</text><text x="852" y="480" text-anchor="end" fill="#21deee" font-family="Arial,sans-serif" font-size="22" font-weight="800" letter-spacing="5">LUNA</text>
+</svg>
