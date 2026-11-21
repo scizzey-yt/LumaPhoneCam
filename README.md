@@ -15,12 +15,6 @@ Install `LumaPhoneCam.apk` on Android 8.0 (API 26) or later. This is a debug-sig
 
 Keep Luma Phone Cam open while streaming. Tapping the microphone button stops the local server. The microphone gain slider applies digital gain from 0% to 150%.
 
-## Build from source
-
-Install JDK 17 and Android SDK Platform 35, then run `gradlew.bat assembleDebug`. The APK is written to `app/build/outputs/apk/debug/app-debug.apk`.
-
-The app captures audio as mono 48 kHz PCM and serves it as a local streaming WAV response. Camera video is delivered as an MJPEG stream using Camera2. Both streams are served from the phone over the same local HTTP port.
-
 ## USB connection
 
 Select **USB** in the app, connect the phone by cable, and enable Android Developer Options → USB debugging. On the Windows PC, install Android Platform Tools, accept the phone's USB debugging prompt, then run:
