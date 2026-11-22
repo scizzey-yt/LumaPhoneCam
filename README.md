@@ -76,24 +76,6 @@ Audio is captured as 48 kHz mono PCM and sent in short blocks; the browser sched
 - **Source is cropped or soft:** match OBS Browser Source width and height to the values in the app; try 1920 × 1080 if the phone/network can keep up.
 - **Audio is delayed or choppy:** use a stronger Wi-Fi signal, reduce competing network traffic, and try 1280 × 720 for video.
 
-## Build from source
-
-Requirements: JDK 17 and Android SDK Platform 35.
-
-```powershell
-./gradlew.bat assembleDebug
-```
-
-The debug APK is created at `app/build/outputs/apk/debug/app-debug.apk`.
-
-## Project layout
-
-```text
-app/src/main/java/com/luna/phonemiccam/  Android app and local streaming server
-app/src/main/assets/obs.html             OBS Browser Source page
-docs/images/                             README UI preview artwork
-LunaPhoneMicCam.apk                      Installable debug APK
-```
 
 ## License
 
