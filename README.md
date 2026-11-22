@@ -79,4 +79,4 @@ Audio is captured as 48 kHz mono PCM and sent in short blocks; the browser sched
 
 ## License
 
-No license has been declared yet. Contact the repository owner before redistributing or reusing this project.
+No license has been declared yet. Contact me at talhasyed9080@gmail.com or at scizzeyyt@gmail.com if you want to edit or make any changes to this app or just email me and tell me what feature you want and I will try to add it.
